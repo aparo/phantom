@@ -82,6 +82,7 @@ package object tables {
       gen[UUID],
       gen[String],
       gen[JsonTest],
+      genOpt[JsonTest],
       genList[JsonTest](),
       genList[JsonTest]().toSet
     )

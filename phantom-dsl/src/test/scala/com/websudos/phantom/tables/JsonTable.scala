@@ -40,6 +40,7 @@ case class JsonClass(
   id: UUID,
   name: String,
   json: JsonTest,
+  jsonOpt: Option[JsonTest],
   jsonList: List[JsonTest],
   jsonSet: Set[JsonTest]
 )
@@ -54,6 +55,16 @@ class JsonTable extends CassandraTable[JsonTable, JsonClass] {
   object name extends StringColumn(this)
 
   object json extends JsonColumn[JsonTable, JsonClass, JsonTest](this) {
+    override def fromJson(obj: String): JsonTest = {
+      JsonParser.parse(obj).extract[JsonTest]
+    }
+
+    override def toJson(obj: JsonTest): String = {
+      compactRender(Extraction.decompose(obj))
+    }
+  }
+
+  object jsonOpt extends OptionalJsonColumn[JsonTable, JsonClass, JsonTest](this) {
     override def fromJson(obj: String): JsonTest = {
       JsonParser.parse(obj).extract[JsonTest]
     }
@@ -88,6 +99,7 @@ class JsonTable extends CassandraTable[JsonTable, JsonClass] {
       id(row),
       name(row),
       json(row),
+      jsonOpt(row),
       jsonList(row),
       jsonSet(row)
     )
@@ -100,6 +112,7 @@ object JsonTable extends JsonTable with PhantomCassandraConnector {
       .value(_.id, sample.id)
       .value(_.name, sample.name)
       .value(_.json, sample.json)
+      .value(_.jsonOpt, sample.jsonOpt)
       .value(_.jsonList, sample.jsonList)
       .value(_.jsonSet, sample.jsonSet)
   }
