@@ -197,7 +197,7 @@ object Build extends Build {
         "com.websudos"                 %% "diesel-engine"                     % DieselEngineVersion,
         "com.chuusai"                  %% "shapeless"                         % ShapelessVersion,
         "com.twitter"                  %% "util-core"                         % TwitterUtilVersion,
-        "com.typesafe.play"            %% "play-iteratees"                    % "2.4.0-M1" exclude ("com.typesafe", "config"),
+        "com.typesafe.play"            %% "play-iteratees"                    % PlayVersion exclude ("com.typesafe", "config"),
         "joda-time"                    %  "joda-time"                         % "2.3",
         "org.joda"                     %  "joda-convert"                      % "1.6",
         "com.datastax.cassandra"       %  "cassandra-driver-core"             % DatastaxDriverVersion,
